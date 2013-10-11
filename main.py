@@ -1,12 +1,11 @@
 import sys 
 from generateSuffixArray import createSuffixArray
 from generateBWTEncoding import *
-from generateBWTDecoding import *
-
+from generateBWTDecoding import decodeBWT
 
 def writeToFileWithBreaks(anFile, aStr):
     counter = 0
-    while counter < len(t):
+    while counter < len(aStr):
         anFile.write(aStr[counter: (counter +80)] + '\n')
         counter += 80
 
@@ -67,4 +66,3 @@ else:
     print "Invalid flag. The flag must be \"-bwt\" to encode or \"-ibwt\" to decode"
     exit(1)
     
-print "Done"

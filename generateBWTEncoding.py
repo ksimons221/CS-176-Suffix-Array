@@ -8,5 +8,4 @@ def encodeBWT(inStr, arr):
             results.append(inStr[el - 1])
 
     results = "".join(results)
-    #print results
     return results

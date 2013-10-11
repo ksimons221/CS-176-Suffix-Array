@@ -17,20 +17,15 @@ def generateIndexMapping(aStr, keyIndex):
 
     return lIndexMapping
 
-
 def decodeBWT(bwt):
     L = list(bwt)
     F = sorted(L)
     results = []
 
-    
-    
     LIndexMapping = generateIndexMapping(L, False)
     FIndexMapping = generateIndexMapping(F, True)
     
     nullChar = "$1"
-    
-    #endIndex = FIndexMapping[nullChar]
     
     currentIndex = LIndexMapping[nullChar]
     currentChar = FIndexMapping[currentIndex]
@@ -41,9 +36,7 @@ def decodeBWT(bwt):
         currentChar = FIndexMapping[currentIndex]
 
     results.append(currentChar[0])
-
     
     results = "".join(results)
-    print "decode"
-    print results
+
     return results

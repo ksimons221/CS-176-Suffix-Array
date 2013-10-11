@@ -1,5 +1,4 @@
 
-
 def radixSort (items, index):
     results = []
     buckets = {}
@@ -50,31 +49,12 @@ def createSortedB0Indexs(inStr, masterDict):
     return b0IndexResults
 
 def mergeB0andB(originalStr, sortedBOIndex, sortedRIndex, rankRDictionary):
-    if len(originalStr) > 32250:
 
-
-        print "FUCK"
-        #print sortedBOIndex
-        #print "GAP"
-        #print sortedRIndex    
-
-        print len(originalStr)
-        print len(sortedBOIndex)
-        print len(sortedRIndex)
-        print sortedBOIndex
-        print sortedRIndex
-        for i  in range(len(originalStr)):
-            if originalStr[i] == "a":
-                print i
-            
-        
-        exit(0)
     B0pointer = 0
     Rpointer = 0
     results = []
     
     while B0pointer < len(sortedBOIndex) and Rpointer < len(sortedRIndex):
-        #print B0pointer , Rpointer
         bIndex = sortedBOIndex[B0pointer]
         rIndex = sortedRIndex[Rpointer]
         if originalStr[bIndex] == originalStr[rIndex]:
@@ -100,7 +80,6 @@ def mergeB0andB(originalStr, sortedBOIndex, sortedRIndex, rankRDictionary):
                     results.append(rIndex)
                     Rpointer += 1
             else:
-                print "FATAL ERROR"
                 exit(1)
         else:
             if originalStr[bIndex] < originalStr[rIndex]:
@@ -115,11 +94,6 @@ def mergeB0andB(originalStr, sortedBOIndex, sortedRIndex, rankRDictionary):
     
     if B0pointer < len(sortedBOIndex):
         results = results + sortedBOIndex[B0pointer:]
-    #print "Results"
-    #print results 
-    #exit(1)
-    #print results
-    #exit(1)
 
     return results
 
@@ -146,8 +120,6 @@ def sampledOrderAndDic(inStr):
 
     originalR = tuple1 + tuple2    
 
-
-    
     bothR = []
     backMap = {}
     
@@ -165,11 +137,6 @@ def sampledOrderAndDic(inStr):
 
     haveDuplicates = False
     if len(noDuplicates) != len(bothR):
-        #print len(noDuplicates) 
-        #print len(bothR)
-        #t = sorted(bothR)
-        #print t
-        #exit(1)
         haveDuplicates = True
          
     tupleRanking = {}
@@ -178,40 +145,23 @@ def sampledOrderAndDic(inStr):
     
     if haveDuplicates == False:
         rIndexInOrder = []    
-        
         for i in range(len(sortedR)):
             rIndexInOrder.append(backMap[sortedR[i]])
-    
         sortedRecursiveDict = sortedIndexNewRankMapping(rIndexInOrder)
-    
         return (rIndexInOrder, sortedRecursiveDict)
     
     else:
         if haveDuplicates:
             newString = []
             for i in range(len(originalR)):
-                #newString.append(str(tupleRanking[originalR[i]]))
                 newString.append(tupleRanking[originalR[i]])
-            #newString.append("$")
             newString.append(-1)
-
-            arr = createSuffixArray(newString)
-            #print arr
-            #print newString
-
-    
-            #print tupleRanking
-            #print(len(inStr))
-            #exit(1)
+            arr = createSuffixArray(newString)  #recursive call
             sortedIndex = []
             for a in arr[1:]:
                 sortedIndex.append(convertBack(numTuples, a))
             sortedIndexDict = sortedIndexNewRankMapping(sortedIndex)
 
-            #print "CHARS"
-            #for x in sortedIndex:
-                #print inStr[x]
-            #exit(1)
             return (sortedIndex, sortedIndexDict)
        
 def convertBack(half, x):
@@ -222,30 +172,9 @@ def convertBack(half, x):
         return 2 + 3 * x
 
 def createSuffixArray(inStr):
-  
-    #print "hey"
-  
-  
     R1R2results = sampledOrderAndDic(inStr)
     rIndexInOrder =  R1R2results[0]
-    #print len(rIndexInOrder)
- 
-    #print "Shit"
-    #print R1R2results
-    
- 
-    #if len(rIndexInOrder) != 200:
-        #print inStr
-     #   for x in rIndexInOrder:
-      #      print inStr[x]
-    #exit(0)
-    
     sortedRecursiveIndex = R1R2results[1]
- 
     sortedB0Index = createSortedB0Indexs(inStr, sortedRecursiveIndex) 
-
     suffixArray = mergeB0andB(inStr, sortedB0Index, rIndexInOrder, sortedRecursiveIndex )
-
-    #print suffixArray
-
     return suffixArray
